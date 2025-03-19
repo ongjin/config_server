@@ -1,0 +1,37 @@
+server:
+    port: 8058
+
+spring:
+    application:
+        name: config_server
+    cloud:
+        config:
+            server:
+                git:
+                    uri: https://github.com/ongjin/config_repo.git
+                    username: ${GIT_USERNAME}
+                    password: ${GIT_TOKEN}
+                    default-label: main
+                    # search-paths: config # Git 저장소 내 검색할 폴더
+                    search-paths:
+                        - "{application}"
+                        - "{application}/{profile}"
+    profiles:
+        active: git # Git을 사용하여 설정을 불러옴
+
+    devtools:
+        restart:
+            enabled: true
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: health, info, refresh, env, beans
+    endpoint:
+        refresh:
+            enabled: true
+        env:
+            enabled: true
+        beans:
+            enabled: true
