@@ -1,18 +1,18 @@
 server:
+    # forward-headers-strategy: native
     port: 8058
 
 spring:
     application:
-        name: config_server
+        name: config-server
     cloud:
         config:
             server:
                 git:
-                    uri: https://github.com/ongjin/config_repo.git
+                    uri: ${GIT_URI}
                     username: ${GIT_USERNAME}
                     password: ${GIT_TOKEN}
                     default-label: main
-                    # search-paths: config # Git 저장소 내 검색할 폴더
                     search-paths:
                         - "{application}"
                         - "{application}/{profile}"
@@ -29,9 +29,5 @@ management:
             exposure:
                 include: health, info, refresh, env, beans
     endpoint:
-        refresh:
-            enabled: true
-        env:
-            enabled: true
-        beans:
-            enabled: true
+        health:
+            show-details: always
